@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 class Node{
     char data;
@@ -103,8 +105,28 @@ public class Assignmentthree{
         return postfix.toString();
     }
     
+    public static void removespace(String filename) {
+            File inputFile = new File(filename);
+        StringBuilder cleanedContent = new StringBuilder();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String cleanedLine = line.replaceAll("(?<=\\S)\\s+(?=\\S)", "");
+                cleanedContent.append(cleanedLine).append("\n");
+            }
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(inputFile))) {
+                bw.write(cleanedContent.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public static void main(String[] args) {
         File filename = new File("Input1.txt");
+        String inputFile = "Input1.txt";
+        removespace(inputFile);
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             int expressionCount = 1;
